@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 struct SDL_Surface {
     int w, h;
@@ -6,46 +8,51 @@ struct SDL_Surface {
 
 class Widget {
 public:
-    Widget() : surface(NULL) {}
-    virtual ~Widget() { if (surface) delete surface; }
+    Widget(const char *name) : surface(NULL) { this->name = strdup(name); }
+    virtual ~Widget() { if (surface) delete surface; free(name); }
     void setX(int x) { this->x = x; }
     void setY(int y) { this->y = y; }
     void setWidth(int width) { this->width = width; }
     void setHeight(int height) { this->height = height; }
     void draw(SDL_Surface *s) {
         surface = new SDL_Surface;
-        surface->w = s->w;
-        surface->h = s->h;
+        surface->w = width;
+        surface->h = height;
         drawself(surface);
     }
 protected:
     int x, y;
     int width, height;
+    char *name;
     SDL_Surface *surface;
 private:
     virtual void drawself(SDL_Surface *s) = 0;
 };
 
 class Button : public Widget {
+public:
+    Button(const char *name) : Widget(name) {}
 private:
     virtual void drawself(SDL_Surface *s) {
-        printf("Draw a Button on (%d, %d), size: (%d, %d).\n",
-            x, y, width, height);
+        printf("Draw a Button [%s] on (%d, %d), size: (%d, %d).\n",
+            name, x, y, width, height);
     }
 };
 
 class Text : public Widget {
+public:
+    Text(const char *name) : Widget(name) {}
 private:
     virtual void drawself(SDL_Surface *s) {
-        printf("Draw a Text on (%d, %d), size: (%d, %d).\n",
-            x, y, width, height);
+        printf("Draw a Text [%s] on (%d, %d), size: (%d, %d).\n",
+            name, x, y, width, height);
     }
 };
 
 class Layout : public Widget {
 public:
 
-    Layout() : wcount(0), lcount(0), surface(NULL) {
+    Layout(const char *name) : Widget(name), count(0) {
     }
 
     virtual ~Layout() {
@@ -54,46 +61,56 @@ public:
     }
 
     void addWidget(Widget *widget) {
-        zList[wcount++] = widget;
+        zList[count++] = widget;
     }
 
     void addLayout(Layout *layout) {
-        this->layout[lcount++] = layout;
+        zList[count++] = layout;
     }
 
     virtual void drawself(SDL_Surface *s) {
-        surface = new SDL_Surface;
-        surface->w = s->w;
-        surface->h = s->h;
-
         drawLayout();
     }
 
     virtual void drawLayout() = 0;
 
 protected:
-    int wcount, lcount;
-    int width, height;
+    int count;
     Widget *zList[256];
-    Layout *layout[256];
-    SDL_Surface *surface;
+};
+
+class HBoxLayout : public Layout {
+public:
+    HBoxLayout(const char *name) : Layout(name) {}
+    virtual void drawLayout() {
+        int ave_width = width / count;
+        int ave_height = height;
+
+        printf("Draw Hlayout [%s] on (%d, %d), ave size: (%d, %d)\n",
+            name, x, y, ave_width, ave_height);
+
+        for (int i = 0; i < count; ++i) {
+            zList[i]->setX(x);
+            zList[i]->setY(y);
+            zList[i]->setWidth(ave_width);
+            zList[i]->setHeight(ave_height);
+            zList[i]->draw(surface);
+            x += ave_width;
+        }
+    }
 };
 
 class VBoxLayout : public Layout {
 public:
-
+    VBoxLayout(const char *name) : Layout(name) {}
     virtual void drawLayout() {
-        int ave_width = width;
-        int ave_height = height / wcount;
-        int x = 0, y = 0;
+        int ave_width = surface->w;
+        int ave_height = surface->h / count;
 
-/*
-        for (int i = 0; i < lcount; ++i) {
-            layout[i]->drawself(surface);
-        }
-*/
+        printf("Draw Vlayout [%s] on (%d, %d), ave size: (%d, %d)\n",
+            name, x, y, ave_width, ave_height);
 
-        for (int i = 0; i < wcount; ++i) {
+        for (int i = 0; i < count; ++i) {
             zList[i]->setX(x);
             zList[i]->setY(y);
             zList[i]->setWidth(ave_width);
@@ -122,6 +139,8 @@ public:
     }
 
     void show() {
+        layout->setWidth(screen->w);
+        layout->setHeight(screen->h);
         layout->draw(screen);
     }
 
@@ -132,15 +151,22 @@ private:
 
 int main()
 {
-    Button *btn = new Button;
-    Text *text = new Text;
-    VBoxLayout *layout = new VBoxLayout;
+    Button *btn1 = new Button("btn1");
+    Button *btn2 = new Button("btn2");
+    Text *text1 = new Text("text1");
+    Text *text2 = new Text("text2");
+    VBoxLayout *vlayout = new VBoxLayout("vlayout");
+    HBoxLayout *hlayout = new HBoxLayout("hlayout");
     Window *window = new Window;
 
-    layout->addWidget(btn);
-    layout->addWidget(text);
+    hlayout->addLayout(vlayout);
+    hlayout->addWidget(btn1);
+    hlayout->addWidget(text1);
 
-    window->setLayout(layout);
+    vlayout->addWidget(btn2);
+    vlayout->addWidget(text2);
+
+    window->setLayout(hlayout);
     window->show();
 
     return 0;
