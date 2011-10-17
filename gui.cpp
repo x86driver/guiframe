@@ -55,11 +55,6 @@ public:
     Layout(const char *name) : Widget(name), count(0) {
     }
 
-    virtual ~Layout() {
-        if (surface)
-            delete surface;
-    }
-
     void addWidget(Widget *widget) {
         zList[count++] = widget;
     }
@@ -168,6 +163,14 @@ int main()
 
     window->setLayout(hlayout);
     window->show();
+
+    delete btn1;
+    delete btn2;
+    delete text1;
+    delete text2;
+    delete vlayout;
+    delete hlayout;
+    delete window;
 
     return 0;
 }
