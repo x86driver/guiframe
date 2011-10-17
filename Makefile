@@ -1,12 +1,17 @@
 TARGET = gui
+CPP_FILES := $(wildcard *.cpp)
+OBJ_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.o)))
 
 CFLAGS = -Wall -Wextra -g
-#CFLAGS += -Weffc++
+CFLAGS += -Weffc++
 
 all: $(TARGET)
 
-gui:gui.cpp
-	g++ $(CFLAGS) -o $@ $<
+%.o:%.cpp %.h
+	g++ $(CFLAGS) -c -o $@ $<
+
+gui:$(OBJ_FILES)
+	g++ $(CFLAGS) -o $@ $^
 
 clean:
-	rm -rf $(TARGET)
+	rm -rf $(TARGET) *.o
