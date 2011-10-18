@@ -9,7 +9,7 @@ void QHBoxLayout::drawLayout()
 {
     int ave_width = width / count;
     int ave_height = height;
-    int sx = x, sy = y;
+    int sx = 0, sy = 0;
 
     printf("Draw Hlayout [%s] on (%d, %d), ave size: (%d, %d)\n",
         name, sx, sy, ave_width, ave_height);

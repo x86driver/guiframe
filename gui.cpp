@@ -26,11 +26,21 @@ int main()
     }
 
     QButton *btn1 = new QButton("btn1");
+    QButton *btn2 = new QButton("btn2");
+    QButton *btn3 = new QButton("btn3");
+    QButton *btn4 = new QButton("btn4");
     QVBoxLayout *vlayout = new QVBoxLayout("vlayout");
+    QHBoxLayout *hlayout = new QHBoxLayout("hlayout");
 
     QWindow *window = new QWindow(screen);
-    vlayout->addWidget(btn1);
-    window->setLayout(vlayout);
+
+    hlayout->addWidget(btn1);
+    hlayout->addLayout(vlayout);
+    hlayout->addWidget(btn2);
+    vlayout->addWidget(btn3);
+    vlayout->addWidget(btn4);
+
+    window->setLayout(hlayout);
     window->show();
 
 	SDL_Event ev;
