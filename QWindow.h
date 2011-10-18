@@ -1,12 +1,12 @@
 #ifndef QWINDOW_H
 #define QWINDOW_H
 
-#include "SDL.h"
+#include <SDL.h>
 #include "layout.h"
 
 class QWindow {
 public:
-    QWindow();
+    QWindow(SDL_Surface *s);
     ~QWindow();
     void setLayout(Layout *layout);
     void show();

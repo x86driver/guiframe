@@ -14,8 +14,7 @@ void Layout::addLayout(Layout *layout)
     zList[count++] = layout;
 }
 
-void Layout::drawself(SDL_Surface *s)
+void Layout::drawself()
 {
     drawLayout();
 }
-

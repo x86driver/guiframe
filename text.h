@@ -7,7 +7,7 @@ class Text : public QWidget {
 public:
     Text(const char *name);
 protected:
-    virtual void drawself(SDL_Surface *s);
+    virtual void drawself();
 };
 
 #endif

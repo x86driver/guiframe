@@ -9,16 +9,17 @@ void QVBoxLayout::drawLayout()
 {
     int ave_width = surface->w;
     int ave_height = surface->h / count;
+    int sx = x, sy = y;
 
     printf("Draw Vlayout [%s] on (%d, %d), ave size: (%d, %d)\n",
-        name, x, y, ave_width, ave_height);
+        name, sx, sy, ave_width, ave_height);
 
     for (int i = 0; i < count; ++i) {
-    	zList[i]->setX(x);
-        zList[i]->setY(y);
+    	zList[i]->setX(sx);
+        zList[i]->setY(sy);
         zList[i]->setWidth(ave_width);
         zList[i]->setHeight(ave_height);
         zList[i]->draw(surface);
-        y += ave_height;
+        sy += ave_height;
     }
 }

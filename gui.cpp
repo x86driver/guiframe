@@ -7,38 +7,107 @@
 #include "QHBoxLayout.h"
 #include "QVBoxLayout.h"
 #include "text.h"
-
-#if 0
-class Window {
-public:
-
-    Window() {
-        screen = new SDL_Surface;
-        screen->w = 480;
-        screen->h = 272;
-    }
-
-    ~Window() {
-        delete screen;
-    }
-
-    void setLayout(Layout *layout) {
-        this->layout = layout;
-    }
-
-    void show() {
-        layout->setWidth(screen->w);
-        layout->setHeight(screen->h);
-        layout->draw(screen);
-    }
-
-private:
-    Layout *layout;
-    SDL_Surface *screen;
-};
-#endif
+#include "platform.h"
 
 int main()
+{
+    if( -1 == SDL_Init(SDL_INIT_VIDEO) ) {
+        printf("Error initializing SDL\n");
+        exit(-1);
+    }
+
+    atexit(SDL_Quit);
+
+    SDL_Surface *screen = SDL_SetVideoMode(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, 16,
+        SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_HWPALETTE|SDL_HWACCEL|SDL_PREALLOC);
+    if (screen == NULL) {
+    printf("Error setting video mode!\n");
+        exit(-1);
+    }
+
+    QButton *btn1 = new QButton("btn1");
+    QVBoxLayout *vlayout = new QVBoxLayout("vlayout");
+
+    QWindow *window = new QWindow(screen);
+    vlayout->addWidget(btn1);
+    window->setLayout(vlayout);
+    window->show();
+
+	SDL_Event ev;
+
+//    SDL_ShowCursor(SDL_DISABLE);
+    SDL_UpdateRect(screen, 0, 0, 0, 0);
+    bool Done = false;
+
+	while (!Done) {
+		SDL_Delay(1);
+		if( SDL_PollEvent(&ev) == 0 ) {
+			continue;
+		}
+		switch(ev.type)
+		{
+			case SDL_MOUSEBUTTONDOWN:
+				switch(ev.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+						//LMB = true;
+						//Gui->OnMouseDown(ev.motion.x, ev.motion.y);
+						//printf << "LMB Down\n";
+						break;
+					case SDL_BUTTON_MIDDLE:
+						//MMB = true;
+						break;
+					case SDL_BUTTON_RIGHT:
+						//RMB = true;
+						break;
+					default:
+						break;
+				}
+				break;
+			case SDL_MOUSEBUTTONUP:
+				switch(ev.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+						//LMB = false;
+						//Gui->OnMouseUp(ev.motion.x, ev.motion.y);
+						//printf << "LMB Up\n";
+						break;
+					case SDL_BUTTON_MIDDLE:
+						//MMB = false;
+						break;
+					case SDL_BUTTON_RIGHT:
+						//RMB = false;
+						break;
+					default:
+						break;
+				}
+				break;
+			case SDL_MOUSEMOTION:
+			   //Gui->OnMouseMove(ev.motion.x, ev.motion.y);
+				//if(LMB) Gui->Drag(ev.motion.xrel, ev.motion.yrel);
+				break;
+			case SDL_QUIT:
+				//Done = true;
+				break;
+			case SDL_KEYDOWN:
+				switch(ev.key.keysym.sym)
+				{
+					case SDLK_SPACE:
+						Done = true;
+						break;
+					default:
+						break;
+				}
+			default:
+				break;
+		}
+	}
+
+	return 0;
+}
+
+#if 0
+int main2()
 {
     QButton *btn1 = new QButton("btn1");
     QButton *btn2 = new QButton("btn2");
@@ -68,3 +137,4 @@ int main()
 
     return 0;
 }
+#endif

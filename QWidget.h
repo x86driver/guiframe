@@ -1,7 +1,7 @@
 #ifndef QWIDGET_H
 #define QWIDGET_H
 
-#include "SDL.h"
+#include <SDL.h>
 
 class Layout;
 
@@ -14,13 +14,14 @@ public:
     void setWidth(int width);
     void setHeight(int height);
     void show();
-    virtual void draw(SDL_Surface *s);
+    void draw(SDL_Surface *parent);
+    void blit();
+    virtual void drawself() = 0;
 protected:
     int x, y;
     int width, height;
     char *name;
-    SDL_Surface *surface;
-    virtual void drawself(SDL_Surface *s) = 0;
+    SDL_Surface *surface, *parent;
 private:
     QWidget(const QWidget &);
     void operator=(const QWidget &);

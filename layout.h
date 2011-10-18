@@ -12,7 +12,7 @@ protected:
     int count;
     QWidget *zList[256];
 
-    virtual void drawself(SDL_Surface *s);
+    virtual void drawself();
     virtual void drawLayout() = 0;
 private:
     Layout(const Layout &);

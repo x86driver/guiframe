@@ -1,11 +1,8 @@
 #include <stddef.h>
 #include "QWindow.h"
 
-QWindow::QWindow() : layout(NULL), screen(NULL)
+QWindow::QWindow(SDL_Surface *s) : layout(NULL), screen(s)
 {
-    screen = new SDL_Surface;
-    screen->w = 480;
-    screen->h = 272;
 }
 
 QWindow::~QWindow() {
