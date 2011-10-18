@@ -16,6 +16,8 @@ public:
     void show();
     void draw(SDL_Surface *parent);
     void blit();
+    virtual bool CheckMouse(int mx, int my);
+    virtual void OnMouseDown(int mx, int my) = 0;
     virtual void drawself() = 0;
 protected:
     int x, y;

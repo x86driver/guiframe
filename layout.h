@@ -8,6 +8,8 @@ public:
     Layout(const char *name);
     void addWidget(QWidget *widget);
     void addLayout(Layout *layout);
+    virtual void OnMouseDown(int mx, int my);
+    bool CheckMouse(int mx, int my);
 protected:
     int count;
     QWidget *zList[256];

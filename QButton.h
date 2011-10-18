@@ -8,6 +8,7 @@
 class QButton : public QWidget {
 public:
     QButton(const char *name);
+    virtual void OnMouseDown(int mx, int my);
 protected:
     virtual void drawself();
 private:

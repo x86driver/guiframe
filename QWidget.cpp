@@ -64,3 +64,14 @@ void QWidget::blit()
         printf("Error BlitSurface Element > Gui\n");
     }
 }
+
+bool QWidget::CheckMouse(int mx, int my)
+{
+    if( (mx >= x && mx <= x+width) && (my >= y && my <= y+height) ) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+

@@ -29,18 +29,27 @@ int main()
     QButton *btn2 = new QButton("btn2");
     QButton *btn3 = new QButton("btn3");
     QButton *btn4 = new QButton("btn4");
+    QButton *btn5 = new QButton("btn5");
+    QButton *btn6 = new QButton("btn6");
+
     QVBoxLayout *vlayout = new QVBoxLayout("vlayout");
-    QHBoxLayout *hlayout = new QHBoxLayout("hlayout");
+    QHBoxLayout *hlayout1 = new QHBoxLayout("hlayout");
+    QHBoxLayout *hlayout2 = new QHBoxLayout("hlayout2");
 
     QWindow *window = new QWindow(screen);
 
-    hlayout->addWidget(btn1);
-    hlayout->addLayout(vlayout);
-    hlayout->addWidget(btn2);
+    hlayout1->addWidget(btn1);
+    hlayout1->addLayout(vlayout);
+    hlayout1->addWidget(btn2);
+
     vlayout->addWidget(btn3);
+    vlayout->addLayout(hlayout2);
     vlayout->addWidget(btn4);
 
-    window->setLayout(hlayout);
+    hlayout2->addWidget(btn5);
+    hlayout2->addWidget(btn6);
+
+    window->setLayout(hlayout1);
     window->show();
 
 	SDL_Event ev;
@@ -61,6 +70,7 @@ int main()
 				{
 					case SDL_BUTTON_LEFT:
 						//LMB = true;
+                        window->OnMouseDown(ev.motion.x, ev.motion.y);
 						//Gui->OnMouseDown(ev.motion.x, ev.motion.y);
 						//printf << "LMB Down\n";
 						break;

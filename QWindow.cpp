@@ -18,3 +18,8 @@ void QWindow::show() {
     layout->setHeight(screen->h);
     layout->draw(screen);
 }
+
+void QWindow::OnMouseDown(int x, int y)
+{
+    layout->OnMouseDown(x, y);
+}

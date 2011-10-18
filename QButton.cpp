@@ -48,3 +48,7 @@ void QButton::DrawBtnDown()
     SDL_FillRect(surface, &bk, GetCol(surface, Col.CliBkg));
 }
 
+void QButton::OnMouseDown(int mx, int my)
+{
+    printf("Button [%s] is pressed!\n", name);
+}

@@ -10,6 +10,8 @@ public:
     ~QWindow();
     void setLayout(Layout *layout);
     void show();
+    void OnMouseDown(int x, int y);
+    void OnMouseUp(int x, int y);
 private:
     Layout *layout;
     SDL_Surface *screen;
