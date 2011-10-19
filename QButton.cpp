@@ -2,7 +2,7 @@
 #include "misc.h"
 #include "QButton.h"
 
-QButton::QButton(const char *name) : QWidget(name), Col()
+QButton::QButton(const char *name) : QWidget(name), Col(), status(BUTTON_UP)
 {
     // set colors
     Col.Border.r = 0x00; Col.Border.g = 0x00; Col.Border.b = 0x00;
@@ -17,7 +17,10 @@ void QButton::drawself()
 {
     printf("Draw a Button [%s] on (%d, %d), size: (%d, %d).\n",
         name, x, y, width, height);
-    DrawBtnUp();
+    if (status == BUTTON_UP)
+        DrawBtnUp();
+    else
+        DrawBtnDown();
 }
 
 void QButton::DrawBtnUp()
@@ -51,4 +54,12 @@ void QButton::DrawBtnDown()
 void QButton::OnMouseDown(int mx, int my)
 {
     printf("Button [%s] is pressed!\n", name);
+    status = BUTTON_DOWN;
 }
+
+void QButton::OnMouseUp(int mx, int my)
+{
+    printf("Button [%s] is pressed!\n", name);
+    status = BUTTON_UP;
+}
+

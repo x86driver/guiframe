@@ -9,10 +9,15 @@ class QButton : public QWidget {
 public:
     QButton(const char *name);
     virtual void OnMouseDown(int mx, int my);
+    virtual void OnMouseUp(int mx, int my);
 protected:
     virtual void drawself();
 private:
     TColors Col;
+    enum Status {
+        BUTTON_UP,
+        BUTTON_DOWN
+    } status;
     void  DrawBtnUp();
     void  DrawBtnDown();
 };

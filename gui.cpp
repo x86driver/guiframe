@@ -90,6 +90,7 @@ int main()
 					case SDL_BUTTON_LEFT:
 						//LMB = false;
 						//Gui->OnMouseUp(ev.motion.x, ev.motion.y);
+                        window->OnMouseUp(ev.motion.x, ev.motion.y);
 						//printf << "LMB Up\n";
 						break;
 					case SDL_BUTTON_MIDDLE:

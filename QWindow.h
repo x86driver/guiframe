@@ -12,6 +12,7 @@ public:
     void show();
     void OnMouseDown(int x, int y);
     void OnMouseUp(int x, int y);
+    void redraw();
 private:
     Layout *layout;
     SDL_Surface *screen;

@@ -18,12 +18,16 @@ public:
     void blit();
     virtual bool CheckMouse(int mx, int my);
     virtual void OnMouseDown(int mx, int my) = 0;
+    virtual void OnMouseUp(int mx, int my) = 0;
     virtual void drawself() = 0;
+    bool bMouseFocus;
+
 protected:
     int x, y;
     int width, height;
     char *name;
     SDL_Surface *surface, *parent;
+
 private:
     QWidget(const QWidget &);
     void operator=(const QWidget &);

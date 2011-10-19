@@ -9,6 +9,7 @@ public:
     void addWidget(QWidget *widget);
     void addLayout(Layout *layout);
     virtual void OnMouseDown(int mx, int my);
+    virtual void OnMouseUp(int mx, int my);
 protected:
     int count;
     QWidget *zList[256];

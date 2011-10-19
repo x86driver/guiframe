@@ -5,7 +5,7 @@
 #include "layout.h"
 
 QWidget::QWidget(const char *name)
-    : x(0), y(0),
+    : bMouseFocus(false), x(0), y(0),
       width(DEFAULT_SCREEN_WIDTH), height(DEFAULT_SCREEN_HEIGHT),
       name(NULL), surface(NULL), parent(NULL)
 {
@@ -52,6 +52,8 @@ void QWidget::draw(SDL_Surface *parent)
     this->parent = parent;
     drawself();
     blit();
+
+    SDL_FreeSurface(surface);
 }
 
 void QWidget::blit()

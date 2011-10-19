@@ -26,7 +26,18 @@ void Layout::OnMouseDown(int mx, int my)
 
     for (int i = 0; i < count; ++i) {
         if (zList[i]->CheckMouse(mx, my) == true) {
+            zList[i]->bMouseFocus = true;
             zList[i]->OnMouseDown(mx, my);
+        }
+    }
+}
+
+void Layout::OnMouseUp(int mx, int my)
+{
+    for (int i = 0; i < count; ++i) {
+        if (zList[i]->bMouseFocus) {
+            zList[i]->bMouseFocus = false;
+            zList[i]->OnMouseUp(mx, my);
         }
     }
 }
