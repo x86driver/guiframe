@@ -30,9 +30,3 @@ void Layout::OnMouseDown(int mx, int my)
         }
     }
 }
-
-// 這裡是否一定要傳回 true, 或者可以直接用 QWidget 的 CheckMouse
-bool Layout::CheckMouse(int mx, int my)
-{
-    return true;
-}
