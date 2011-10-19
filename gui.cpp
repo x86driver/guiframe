@@ -6,7 +6,7 @@
 #include "QButton.h"
 #include "QHBoxLayout.h"
 #include "QVBoxLayout.h"
-#include "text.h"
+#include "QFont.h"
 #include "platform.h"
 
 int main()
@@ -25,7 +25,8 @@ int main()
         exit(-1);
     }
 
-    QButton *btn1 = new QButton("btn1");
+//    QButton *btn1 = new QButton("btn1");
+    QFont *font1 = new QFont("Hello world!");
     QButton *btn2 = new QButton("btn2");
     QButton *btn3 = new QButton("btn3");
     QButton *btn4 = new QButton("btn4");
@@ -38,7 +39,7 @@ int main()
 
     QWindow *window = new QWindow(screen);
 
-    hlayout1->addWidget(btn1);
+    hlayout1->addWidget(font1);
     hlayout1->addLayout(vlayout);
     hlayout1->addWidget(btn2);
 

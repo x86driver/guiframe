@@ -14,12 +14,12 @@ protected:
     virtual void drawself();
 private:
     TColors Col;
+    void  DrawBtnUp();
+    void  DrawBtnDown();
     enum Status {
         BUTTON_UP,
         BUTTON_DOWN
     } status;
-    void  DrawBtnUp();
-    void  DrawBtnDown();
 };
 
 #endif
