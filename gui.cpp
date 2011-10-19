@@ -50,6 +50,8 @@ int main()
     hlayout2->addWidget(btn5);
     hlayout2->addWidget(btn6);
 
+    font1->setTextVisible(false);
+
     window->setLayout(hlayout1);
     window->show();
 

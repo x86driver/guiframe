@@ -1,9 +1,10 @@
 #include <SDL_ttf.h>
 #include "QFont.h"
+#include "misc.h"
 
 #define DEFAULT_FONT "/usr/share/cups/fonts/Monospace"
 
-QFont::QFont(const char *str) : QWidget("QFont"), str(NULL)
+QFont::QFont(const char *str) : QWidget("QFont"), str(NULL), visible(true)
 {
     this->str = strdup(str);
 }
@@ -14,7 +15,7 @@ QFont::~QFont()
         free(str);
 }
 
-void QFont::drawself()
+SDL_Surface *QFont::render()
 {
     SDL_Color backcolor = {0xff, 0, 0, 0};
     SDL_Color forecolor = {0, 0, 0xff, 0};
@@ -22,7 +23,7 @@ void QFont::drawself()
     if ( TTF_Init() < 0 ) {
         fprintf(stderr, "Couldn't initialize TTF: %s\n",SDL_GetError());
         SDL_Quit();
-        return;
+        return NULL;
     }
 
     TTF_Font *font = TTF_OpenFont(DEFAULT_FONT, 24);
@@ -39,18 +40,34 @@ void QFont::drawself()
 
     TTF_CloseFont(font);
 
-    SDL_Rect dstrect;
-    dstrect.x = 0;
-    dstrect.y = 0;
-    dstrect.w = text->w;
-    dstrect.h = text->h;
+    return text;
+}
 
-    if ( SDL_BlitSurface(text, NULL, surface, &dstrect) < 0 ) {
-        fprintf(stderr, "Couldn't blit text to display: %s\n",
-                            SDL_GetError());
+void QFont::drawself()
+{
+    if (visible == true) {
+        SDL_Surface *text = render();
+        SDL_Rect dstrect;
+        dstrect.x = 0;
+        dstrect.y = 0;
+        dstrect.w = text->w;
+        dstrect.h = text->h;
+
+        if ( SDL_BlitSurface(text, NULL, surface, &dstrect) < 0 ) {
+            fprintf(stderr, "Couldn't blit text to display: %s\n",
+                                SDL_GetError());
+        }
+        SDL_FreeSurface(text);
+    } else {
+        printf("I'm invisible!\n");
+        SDL_Color backcolor = {0xff, 0, 0, 0};
+        SDL_FillRect(surface, NULL, GetCol(surface, backcolor));
     }
+}
 
-    SDL_FreeSurface(text);
+void QFont::setTextVisible(bool visible)
+{
+    this->visible = visible;
 }
 
 void QFont::OnMouseDown(int mx, int my)
