@@ -8,6 +8,7 @@ public:
     QFont(const char *str);
     ~QFont();
     void setTextVisible(bool visible);
+    SDL_Surface *render();
     virtual void OnMouseDown(int mx, int my);
     virtual void OnMouseUp(int mx, int my);
 protected:
@@ -15,7 +16,6 @@ protected:
 private:
     char *str;
     bool visible;
-    SDL_Surface *render();
     QFont(const QFont &);
     void operator=(const QFont &);
 };

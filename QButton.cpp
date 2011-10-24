@@ -4,7 +4,7 @@
 
 QButton::QButton(const char *name)
     : QWidget(name), Col(), status(BUTTON_UP),
-      cmd_widget(NULL), cmd(nocmd), nocmd()
+      caption(new QFont(name)), cmd_widget(NULL), cmd(nocmd), nocmd()
 {
     // set colors
     Col.Border.r = 0x00; Col.Border.g = 0x00; Col.Border.b = 0x00;
@@ -15,6 +15,12 @@ QButton::QButton(const char *name)
     Col.Dim3D.r = 0x40; Col.Dim3D.g = 0x40; Col.Dim3D.b = 0x40;
 }
 
+QButton::~QButton()
+{
+    if (caption)
+        delete caption;
+}
+
 void QButton::drawself()
 {
     dbg("Draw a Button [%s] on (%d, %d), size: (%d, %d).\n",
@@ -23,6 +29,12 @@ void QButton::drawself()
         DrawBtnUp();
     else
         DrawBtnDown();
+
+    SDL_Surface *t = caption->render();
+    SDL_Rect dst;
+    dst.x = 20;
+    dst.y = 20;
+    SDL_BlitSurface(t, NULL, surface, &dst);
 }
 
 void QButton::DrawBtnUp()
