@@ -2,7 +2,9 @@
 #include "misc.h"
 #include "QButton.h"
 
-QButton::QButton(const char *name) : QWidget(name), Col(), status(BUTTON_UP)
+QButton::QButton(const char *name)
+    : QWidget(name), Col(), status(BUTTON_UP),
+      cmd_widget(NULL), cmd(nocmd), nocmd()
 {
     // set colors
     Col.Border.r = 0x00; Col.Border.g = 0x00; Col.Border.b = 0x00;
@@ -15,8 +17,8 @@ QButton::QButton(const char *name) : QWidget(name), Col(), status(BUTTON_UP)
 
 void QButton::drawself()
 {
-    printf("Draw a Button [%s] on (%d, %d), size: (%d, %d).\n",
-        name, x, y, width, height);
+//    printf("Draw a Button [%s] on (%d, %d), size: (%d, %d).\n",
+//        name, x, y, width, height);
     if (status == BUTTON_UP)
         DrawBtnUp();
     else
@@ -25,13 +27,13 @@ void QButton::drawself()
 
 void QButton::DrawBtnUp()
 {
-    int b = 1;
+    Sint16 b = 1;
 
     SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
 
-    SDL_Rect tl = {0, 0, width, height};
-    SDL_Rect br = {b, b, width-b, height-b};
-    SDL_Rect bk = {b, b, width-2*b, height-2*b};
+    SDL_Rect tl = {0, 0, static_cast<Uint16>(width), static_cast<Uint16>(height)};
+    SDL_Rect br = {b, b, static_cast<Uint16>(width-b), static_cast<Uint16>(height-b)};
+    SDL_Rect bk = {b, b, static_cast<Uint16>(width-2*b), static_cast<Uint16>(height-2*b)};
 
     SDL_FillRect(surface, &tl, GetCol(surface, Col.Light3D));
     SDL_FillRect(surface, &br, GetCol(surface, Col.Dim3D));
@@ -40,11 +42,11 @@ void QButton::DrawBtnUp()
 
 void QButton::DrawBtnDown()
 {
-    int b = 1;
+    Sint16 b = 1;
 
-    SDL_Rect tl = {0, 0, width, height};
-    SDL_Rect br = {b, b, width-b, height-b};
-    SDL_Rect bk = {b, b, width-2*b, height-2*b};
+    SDL_Rect tl = {0, 0, static_cast<Uint16>(width), static_cast<Uint16>(height)};
+    SDL_Rect br = {b, b, static_cast<Uint16>(width-b), static_cast<Uint16>(height-b)};
+    SDL_Rect bk = {b, b, static_cast<Uint16>(width-2*b), static_cast<Uint16>(height-2*b)};
 
     SDL_FillRect(surface, &tl, GetCol(surface, Col.Dim3D));
     SDL_FillRect(surface, &br, GetCol(surface, Col.Light3D));
@@ -53,13 +55,19 @@ void QButton::DrawBtnDown()
 
 void QButton::OnMouseDown(int mx, int my)
 {
-    printf("Button [%s] is pressed!\n", name);
+//    printf("Button [%s] is pressed!\n", name);
     status = BUTTON_DOWN;
+    cmd(cmd_widget);
 }
 
 void QButton::OnMouseUp(int mx, int my)
 {
-    printf("Button [%s] is pressed!\n", name);
+//    printf("Button [%s] is pressed!\n", name);
     status = BUTTON_UP;
 }
 
+void QButton::setClicked(Functor<void (QWidget*)> &cmd, QWidget *widget)
+{
+    this->cmd = cmd;
+    this->cmd_widget = widget;
+}

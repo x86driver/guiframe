@@ -77,3 +77,7 @@ bool QWidget::CheckMouse(int mx, int my)
     }
 }
 
+char *QWidget::getname()
+{
+    return name;
+}

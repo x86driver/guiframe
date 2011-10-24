@@ -11,8 +11,8 @@ void QHBoxLayout::drawLayout()
     int ave_height = height;
     int sx = 0, sy = 0;
 
-    printf("Draw Hlayout [%s] on (%d, %d), ave size: (%d, %d)\n",
-        name, sx, sy, ave_width, ave_height);
+//    printf("Draw Hlayout [%s] on (%d, %d), ave size: (%d, %d)\n",
+//        name, sx, sy, ave_width, ave_height);
 
     for (int i = 0; i < count; ++i) {
         zList[i]->setX(sx);

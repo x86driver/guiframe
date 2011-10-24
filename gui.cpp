@@ -8,6 +8,12 @@
 #include "QVBoxLayout.h"
 #include "QFont.h"
 #include "platform.h"
+#include "lib/functor.h"
+
+void show_me_money(QWidget *widget)
+{
+    printf("press %s!!\n", widget->getname());
+}
 
 int main()
 {
@@ -38,6 +44,14 @@ int main()
     QHBoxLayout *hlayout2 = new QHBoxLayout("hlayout2");
 
     QWindow *window = new QWindow(screen);
+
+    Functor<void (QWidget*)> cmd1(show_me_money);
+    btn2->setClicked(cmd1, btn2);
+    btn3->setClicked(cmd1, btn3);
+    btn4->setClicked(cmd1, btn4);
+    btn5->setClicked(cmd1, btn5);
+    btn6->setClicked(cmd1, btn6);
+
 
     hlayout1->addWidget(font1);
     hlayout1->addLayout(vlayout);

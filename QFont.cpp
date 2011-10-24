@@ -59,7 +59,7 @@ void QFont::drawself()
         }
         SDL_FreeSurface(text);
     } else {
-        printf("I'm invisible!\n");
+//        printf("I'm invisible!\n");
         SDL_Color backcolor = {0xff, 0, 0, 0};
         SDL_FillRect(surface, NULL, GetCol(surface, backcolor));
     }
