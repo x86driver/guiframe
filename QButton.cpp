@@ -17,8 +17,8 @@ QButton::QButton(const char *name)
 
 void QButton::drawself()
 {
-//    printf("Draw a Button [%s] on (%d, %d), size: (%d, %d).\n",
-//        name, x, y, width, height);
+    dbg("Draw a Button [%s] on (%d, %d), size: (%d, %d).\n",
+        name, x, y, width, this->height);
     if (status == BUTTON_UP)
         DrawBtnUp();
     else
@@ -55,14 +55,14 @@ void QButton::DrawBtnDown()
 
 void QButton::OnMouseDown(int mx, int my)
 {
-//    printf("Button [%s] is pressed!\n", name);
+    dbg("Button [%s] is pressed!\n", name);
     status = BUTTON_DOWN;
     cmd(cmd_widget);
 }
 
 void QButton::OnMouseUp(int mx, int my)
 {
-//    printf("Button [%s] is pressed!\n", name);
+    dbg("Button [%s] is pressed!\n", name);
     status = BUTTON_UP;
 }
 

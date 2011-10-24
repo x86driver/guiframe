@@ -13,4 +13,12 @@ typedef struct {
 } TColors;
 #define GetCol(s, col) (SDL_MapRGB(s->format, col.r, col.g, col.b))
 
+#undef DEBUG
+
+#ifdef DEBUG
+    #define dbg(format, arg...) printf(format, ##arg)
+#else
+    #define dbg(format, arg...) do {} while(0)
+#endif
+
 #endif
