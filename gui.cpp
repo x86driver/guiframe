@@ -15,6 +15,13 @@ void show_me_money(QWidget *widget)
     printf("press %s!!\n", widget->getname());
 }
 
+void toggle_text(QWidget *font)
+{
+    static bool visible = false;
+    static_cast<QFont*>(font)->setTextVisible(visible);
+    visible = !visible;
+}
+
 int main()
 {
     if( -1 == SDL_Init(SDL_INIT_VIDEO) ) {
@@ -46,7 +53,8 @@ int main()
     QWindow *window = new QWindow(screen);
 
     Functor<QButton::CallbackType> cmd1(show_me_money);
-    btn2->setClicked(cmd1, btn2);
+    Functor<QButton::CallbackType> cmd2(toggle_text);
+    btn2->setClicked(cmd2, font1);
     btn3->setClicked(cmd1, btn3);
     btn4->setClicked(cmd1, btn4);
     btn5->setClicked(cmd1, btn5);
