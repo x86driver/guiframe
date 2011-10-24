@@ -45,7 +45,7 @@ int main()
 
     QWindow *window = new QWindow(screen);
 
-    Functor<void (QWidget*)> cmd1(show_me_money);
+    Functor<QButton::CallbackType> cmd1(show_me_money);
     btn2->setClicked(cmd1, btn2);
     btn3->setClicked(cmd1, btn3);
     btn4->setClicked(cmd1, btn4);

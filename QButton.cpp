@@ -66,7 +66,7 @@ void QButton::OnMouseUp(int mx, int my)
     status = BUTTON_UP;
 }
 
-void QButton::setClicked(Functor<void (QWidget*)> &cmd, QWidget *widget)
+void QButton::setClicked(Functor<CallbackType> &cmd, QWidget *widget)
 {
     this->cmd = cmd;
     this->cmd_widget = widget;
