@@ -32,9 +32,10 @@ void QButton::drawself()
 
     SDL_Surface *t = caption->render();
     SDL_Rect dst;
-    dst.x = 20;
-    dst.y = 20;
+    dst.x = (width - t->w) / 2;
+    dst.y = (height - t->h) / 2;
     SDL_BlitSurface(t, NULL, surface, &dst);
+    SDL_FreeSurface(t);
 }
 
 void QButton::DrawBtnUp()
