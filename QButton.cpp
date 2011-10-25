@@ -70,13 +70,13 @@ void QButton::OnMouseDown(int mx, int my)
 {
     dbg("Button [%s] is pressed!\n", name);
     status = BUTTON_DOWN;
-    cmd(cmd_widget, cmd_data);
 }
 
 void QButton::OnMouseUp(int mx, int my)
 {
     dbg("Button [%s] is pressed!\n", name);
     status = BUTTON_UP;
+    cmd(cmd_widget, cmd_data);
 }
 
 void QButton::setClicked(Functor<CallbackType> &cmd, QWidget *widget, void *data)

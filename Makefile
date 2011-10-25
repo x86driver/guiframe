@@ -7,6 +7,10 @@ CFLAGS += `sdl-config --cflags --libs`
 CFLAGS += -I/usr/local/include/SDL -L/usr/local/lib -lSDL_ttf
 CFLAGS += -Weffc++ -std=gnu++0x
 
+clean-all:
+	make clean
+	make all
+
 all: $(TARGET)
 
 %.o:%.cpp
