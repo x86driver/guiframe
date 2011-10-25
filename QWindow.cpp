@@ -13,6 +13,10 @@ QWindow::~QWindow()
 
 void QWindow::setLayout(Layout *layout) {
     this->layout = layout;
+    this->layout->setWidth(screen->w);
+    this->layout->setHeight(screen->h);
+    this->layout->setX(0);
+    this->layout->setY(0);
 }
 
 void QWindow::show() {

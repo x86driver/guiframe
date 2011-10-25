@@ -4,7 +4,7 @@
 
 QButton::QButton(const char *name)
     : QWidget(name), Col(), status(BUTTON_UP),
-      caption(new QFont(name)), cmd_widget(NULL), cmd(nocmd), nocmd()
+      caption(new QFont(name)), cmd_widget(NULL), cmd_data(NULL), cmd(nocmd), nocmd()
 {
     // set colors
     Col.Border.r = 0x00; Col.Border.g = 0x00; Col.Border.b = 0x00;
@@ -69,7 +69,7 @@ void QButton::OnMouseDown(int mx, int my)
 {
     dbg("Button [%s] is pressed!\n", name);
     status = BUTTON_DOWN;
-    cmd(cmd_widget);
+    cmd(cmd_widget, cmd_data);
 }
 
 void QButton::OnMouseUp(int mx, int my)
@@ -78,8 +78,9 @@ void QButton::OnMouseUp(int mx, int my)
     status = BUTTON_UP;
 }
 
-void QButton::setClicked(Functor<CallbackType> &cmd, QWidget *widget)
+void QButton::setClicked(Functor<CallbackType> &cmd, QWidget *widget, void *data)
 {
     this->cmd = cmd;
     this->cmd_widget = widget;
+    this->cmd_data = data;
 }

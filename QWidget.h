@@ -13,6 +13,7 @@ public:
     void setY(int y);
     void setWidth(int width);
     void setHeight(int height);
+    void setVisible(bool visible);
     void show();
     void draw(SDL_Surface *parent);
     void blit();
@@ -27,6 +28,7 @@ protected:
     int x, y;
     int width, height;
     char *name;
+    bool visible;
     SDL_Surface *surface, *parent;
 
 private:

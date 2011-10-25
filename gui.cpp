@@ -10,16 +10,28 @@
 #include "platform.h"
 #include "lib/functor.h"
 
-void show_me_money(QWidget *widget)
+
+struct Pages {
+    QWindow *window;
+    QHBoxLayout *layout;
+};
+
+void show_me_money(QWidget *widget, void *data)
 {
     printf("press %s!!\n", widget->getname());
 }
 
-void toggle_text(QWidget *font)
+void toggle_text(QWidget *widget, void *data)
 {
     static bool visible = false;
-    static_cast<QFont*>(font)->setTextVisible(visible);
+    static_cast<QFont*>(data)->setVisible(visible);
     visible = !visible;
+}
+
+void next_page(QWidget *widget, void *data)
+{
+    Pages *page = static_cast<Pages*>(data);
+    page->window->setLayout(page->layout);
 }
 
 int main()
@@ -52,14 +64,19 @@ int main()
 
     QWindow *window = new QWindow(screen);
 
+    Pages *page2 = new Pages;
+    page2->window = window;
+    page2->layout = hlayout2;
+
     Functor<QButton::CallbackType> cmd1(show_me_money);
-    Functor<QButton::CallbackType> cmd2(toggle_text);
-    btn2->setClicked(cmd2, font1);
+    Functor<QButton::CallbackType> cmd2(next_page);
+    btn2->setClicked(cmd2, NULL, page2);
+/*
     btn3->setClicked(cmd1, btn3);
     btn4->setClicked(cmd1, btn4);
     btn5->setClicked(cmd1, btn5);
     btn6->setClicked(cmd1, btn6);
-
+*/
 
     hlayout1->addWidget(font1);
     hlayout1->addLayout(vlayout);
@@ -72,7 +89,7 @@ int main()
     hlayout2->addWidget(btn5);
     hlayout2->addWidget(btn6);
 
-    font1->setTextVisible(false);
+    font1->setVisible(false);
 
     window->setLayout(hlayout1);
     window->show();

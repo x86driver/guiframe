@@ -4,7 +4,7 @@
 
 #define DEFAULT_FONT "/usr/share/cups/fonts/Monospace"
 
-QFont::QFont(const char *str) : QWidget("QFont"), str(NULL), visible(true)
+QFont::QFont(const char *str) : QWidget("QFont"), str(NULL)
 {
     this->str = strdup(str);
 }
@@ -58,16 +58,13 @@ void QFont::drawself()
                                 SDL_GetError());
         }
         SDL_FreeSurface(text);
-    } else {
-//        printf("I'm invisible!\n");
+    }
+/* else {
+        dbg("I'm invisible!\n");
         SDL_Color backcolor = {0xff, 0, 0, 0};
         SDL_FillRect(surface, NULL, GetCol(surface, backcolor));
     }
-}
-
-void QFont::setTextVisible(bool visible)
-{
-    this->visible = visible;
+*/
 }
 
 void QFont::OnMouseDown(int mx, int my)

@@ -7,7 +7,7 @@
 QWidget::QWidget(const char *name)
     : bMouseFocus(false), x(0), y(0),
       width(DEFAULT_SCREEN_WIDTH), height(DEFAULT_SCREEN_HEIGHT),
-      name(NULL), surface(NULL), parent(NULL)
+      name(NULL), visible(true), surface(NULL), parent(NULL)
 {
     this->name = strdup(name);
 }
@@ -80,4 +80,9 @@ bool QWidget::CheckMouse(int mx, int my)
 char *QWidget::getname()
 {
     return name;
+}
+
+void QWidget::setVisible(bool visible)
+{
+    this->visible = visible;
 }
