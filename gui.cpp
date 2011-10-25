@@ -24,7 +24,7 @@ void show_me_money(QWidget *widget, void *data)
 void toggle_text(QWidget *widget, void *data)
 {
     static bool visible = false;
-    static_cast<QFont*>(data)->setVisible(visible);
+    static_cast<QFont*>(widget)->setVisible(visible);
     visible = !visible;
 }
 
@@ -68,9 +68,13 @@ int main()
     page2->window = window;
     page2->layout = hlayout2;
 
+    font1->setfgcolor(0xff, 0, 0xff);
+    font1->setbgcolor(0, 0, 0);
+    font1->setfontsize(16);
     Functor<QButton::CallbackType> cmd1(show_me_money);
-    Functor<QButton::CallbackType> cmd2(next_page);
-    btn2->setClicked(cmd2, NULL, page2);
+    Functor<QButton::CallbackType> cmd2(toggle_text);
+//    btn2->setClicked(cmd2, NULL, page2);
+    btn2->setClicked(cmd2, font1, NULL);
 /*
     btn3->setClicked(cmd1, btn3);
     btn4->setClicked(cmd1, btn4);
