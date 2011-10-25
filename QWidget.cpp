@@ -7,9 +7,8 @@
 QWidget::QWidget(const char *name)
     : bMouseFocus(false), x(0), y(0),
       width(DEFAULT_SCREEN_WIDTH), height(DEFAULT_SCREEN_HEIGHT),
-      name(NULL), visible(true), surface(NULL), parent(NULL)
+      name(strdup(name)), visible(true), surface(NULL), parent(NULL)
 {
-    this->name = strdup(name);
 }
 
 QWidget::~QWidget()

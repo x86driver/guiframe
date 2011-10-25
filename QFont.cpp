@@ -5,10 +5,9 @@
 #define DEFAULT_FONT "/usr/share/cups/fonts/Monospace"
 
 QFont::QFont(const char *str)
-    : QWidget("QFont"), str(NULL), fontsize(20),
+    : QWidget("QFont"), str(strdup(str)), fontsize(20),
       backcolor({0xc0, 0xc0, 0xc0, 0}), forecolor({0, 0, 0xff, 0})
 {
-    this->str = strdup(str);
 }
 
 QFont::~QFont()
