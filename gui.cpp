@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
 #include "QWidget.h"
 #include "QWindow.h"
 #include "QButton.h"
@@ -10,6 +12,7 @@
 #include "platform.h"
 #include "lib/functor.h"
 
+bool thread_done = false;
 
 struct Pages {
     QWindow *window;
@@ -24,8 +27,24 @@ void show_me_money(QWidget *widget, void *data)
 void toggle_text(QWidget *widget, void *data)
 {
     static bool visible = false;
-    static_cast<QFont*>(widget)->setVisible(visible);
-    visible = !visible;
+    QFont *font = static_cast<QFont*>(widget);
+    font->settext("fuck");
+//    static_cast<QFont*>(widget)->setVisible(visible);
+//    visible = !visible;
+}
+
+QWindow *global_window;
+static char number[1] = {'0'};
+void *update_text(void *widget)
+{
+    QFont *font = static_cast<QFont*>(widget);
+    while (thread_done == false) {
+        font->settext(number);
+        global_window->redraw();
+        ++number[0];
+        sleep(1);
+    }
+    return NULL;
 }
 
 void next_page(QWidget *widget, void *data)
@@ -63,6 +82,7 @@ int main()
     QHBoxLayout *hlayout2 = new QHBoxLayout("hlayout2");
 
     QWindow *window = new QWindow(screen);
+    global_window = window;
 
     Pages *page2 = new Pages;
     page2->window = window;
@@ -93,10 +113,13 @@ int main()
     hlayout2->addWidget(btn5);
     hlayout2->addWidget(btn6);
 
-    font1->setVisible(false);
+    font1->setVisible(true);
 
     window->setLayout(hlayout1);
     window->show();
+
+    pthread_t tid;
+    pthread_create(&tid, NULL, update_text, (font1));
 
 	SDL_Event ev;
 
@@ -161,6 +184,7 @@ int main()
 				{
 					case SDLK_SPACE:
 						Done = true;
+                        thread_done = true;
 						break;
 					default:
 						break;

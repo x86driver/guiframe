@@ -87,3 +87,10 @@ void QFont::setfgcolor(uint8_t r, uint8_t g, uint8_t b)
 {
     forecolor = {r, g, b, 0};
 }
+
+void QFont::settext(const char *str)
+{
+    if (this->str)
+        free(this->str);
+    this->str = strdup(str);
+}

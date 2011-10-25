@@ -11,6 +11,7 @@ public:
     void setfontsize(int size);
     void setbgcolor(uint8_t r, uint8_t g, uint8_t b);
     void setfgcolor(uint8_t r, uint8_t g, uint8_t b);
+    void settext(const char *str);
     virtual void OnMouseDown(int mx, int my);
     virtual void OnMouseUp(int mx, int my);
 protected:
