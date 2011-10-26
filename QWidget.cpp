@@ -62,7 +62,7 @@ void QWidget::blit()
     dst.y = y;
 
     if (-1 == SDL_BlitSurface(surface, NULL, parent, &dst )) {
-        printf("Error BlitSurface Element > Gui\n");
+        printf("Error BlitSurface Element > Gui: %s\n", SDL_GetError());
     }
 }
 

@@ -1,4 +1,5 @@
 #include <SDL_ttf.h>
+#include <string.h>
 #include "QFont.h"
 #include "misc.h"
 
