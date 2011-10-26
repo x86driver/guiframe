@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <pthread.h>
 #include "QWidget.h"
 #include "QWindow.h"
 #include "QButton.h"
@@ -117,9 +116,6 @@ int main()
 
     window->setLayout(hlayout1);
     window->show();
-
-    pthread_t tid;
-    pthread_create(&tid, NULL, update_text, (font1));
 
 	SDL_Event ev;
 
